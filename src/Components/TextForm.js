@@ -40,6 +40,7 @@ const ClickToCopy = () =>{
   let text = document.getElementById("myBox");
   text.select();
   navigator.clipboard.writeText(text.value);
+  document.getSelection().removeAllRanges();
   props.showAlert("Coppied!", "success");
 }
 
@@ -48,30 +49,27 @@ const ClickToRemoveSpaces= () =>{
   setText(newText.join(" "));
   props.showAlert("Removed Extra Spaceses!", "success");
 }
-  // setText("new text");
+
   return (
     <>
     <div className="container" style= {{color: props.mode === 'dark'?'white':'black'}}>
-      <h1>{props.heading}</h1>
+      <h1 className="mb-4">{props.heading}</h1>
       <div className="mb-3" >
-        {/* <label for="myBox" className="form-label">
-          Example textarea
-        </label> */}
-        <textarea className="form-control" onChange = {handleOnChamge} style= {{backgroundColor: props.mode === 'dark'?'grey':'white', color: props.mode === 'dark'?'white':'black'}} value = {text} id="myBox" rows="8"></textarea>
+        <textarea className="form-control" onChange = {handleOnChamge} style= {{backgroundColor: props.mode === 'dark'?'#00073a':'white', color: props.mode === 'dark'?'white':'black'}} value = {text} id="myBox" rows="8"></textarea>
       </div>
-      <button className="btn btn-primary mx-1 my-1" onClick={ClickToUpperCase}> Upper Case</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={ClickToLowerCase}>Lower Case</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={ClickToTitleCase}>Title Case</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={ClickToCopy}>Copy Text</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={ClickToRemoveSpaces}>Remove Spaces</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={ClickToUpperCase}> Upper Case</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={ClickToLowerCase}>Lower Case</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={ClickToTitleCase}>Title Case</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={ClickToCopy}>Copy Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={ClickToRemoveSpaces}>Remove Spaces</button>
       
-      <button className="btn btn-primary mx-1" onClick={ClickToClear}>Clear</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1" onClick={ClickToClear}>Clear</button>
       
     </div>
     <div className="container my-3" style= {{color: props.mode === 'dark'?'white':'black'}}>
       <h2>Your Text Summary</h2>
-      <p>{text.split(" ").length} Words and {text.length} Length</p>
-      <p>{0.008 * text.split(" ").length} Minutes To Read</p>
+      <p>{text.split(" ").filter((element) => {return element.length!==0}).length} Words and {text.length} Length</p>
+      <p>{0.008 * text.split(" ").filter((element) => {return element.length!==0}).length} Minutes To Read</p>
       <h2>Privew</h2>
       <p>{text.length>0?text:"Enter Your Text To Preview"}</p>
     </div>
