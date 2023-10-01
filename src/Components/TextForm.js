@@ -37,10 +37,10 @@ const handleOnChamge = (event) =>{
 const[text, setText] = useState("")
 
 const ClickToCopy = () =>{
-  let text = document.getElementById("myBox");
-  text.select();
-  navigator.clipboard.writeText(text.value);
-  document.getSelection().removeAllRanges();
+  // let text = document.getElementById("myBox");
+  // text.select();
+  navigator.clipboard.writeText(text);
+  // document.getSelection().removeAllRanges();
   props.showAlert("Coppied!", "success");
 }
 
@@ -68,7 +68,7 @@ const ClickToRemoveSpaces= () =>{
     </div>
     <div className="container my-3" style= {{color: props.mode === 'dark'?'white':'black'}}>
       <h2>Your Text Summary</h2>
-      <p>{text.split(" ").filter((element) => {return element.length!==0}).length} Words and {text.length} Length</p>
+      <p>{text.split(/\s+/).filter((element) => {return element.length!==0}).length} Words and {text.length} Length</p>
       <p>{0.008 * text.split(" ").filter((element) => {return element.length!==0}).length} Minutes To Read</p>
       <h2>Privew</h2>
       <p>{text.length>0?text:"Enter Your Text To Preview"}</p>
